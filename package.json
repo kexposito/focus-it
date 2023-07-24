@@ -13,8 +13,8 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "focus-it.helloWorld",
-      "title": "Hello World"
+      "command": "focus-it.execute",
+      "title": "Focus It"
     }]
   },
   "scripts": {
