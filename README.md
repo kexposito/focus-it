@@ -1,65 +1,37 @@
-# focus-it README
+# FocusIt - Visual Studio Code Extension
 
-This is the README for your extension "focus-it". After writing up a brief description, we recommend including the following sections.
+## Description
+
+FocusIt is a Visual Studio Code extension that allows you to focus on a single window at a time. When activated, the extension hides all other windows except the one that is currently in focus. When executed again, it restores all previously hidden windows.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Easily activate FocusIt with a customizable keyboard shortcut.
+- Hide all open windows except the focused one to minimize distractions.
+- Restore all previously hidden windows with a simple execution of the command.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Launch Visual Studio Code.
+2. Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window.
+3. Search for "FocusIt" in the Extensions view search box.
+4. Click on the "Install" button for the "FocusIt" extension by Kexposito (Kevin Exposito) to install it.
+5. Once installed, you can activate FocusIt using the provided keyboard shortcut or by executing the command from the Command Palette.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Activate the FocusIt extension by using the default keyboard shortcut (you can customize this in your settings) or by executing the "Focus It" command from the Command Palette.
+2. All other open windows will be hidden, leaving only the currently focused window visible.
+3. To restore all previously hidden windows, activate the FocusIt extension again.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+- `focus-it.execute`: Customize the keyboard shortcut to activate FocusIt. By default, it is set to `Ctrl+Shift+M` on Windows/Linux and `Cmd+Shift+M` on macOS.
 
-For example:
+## Feedback and Contributions
 
-This extension contributes the following settings:
+If you have any feedback, suggestions, or issues, feel free to open an issue on the [GitHub repository](https://github.com/kexposito/focus-it). Contributions are also welcome!
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## License
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+This extension is licensed under the [MIT License](LICENSE).
