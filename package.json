@@ -6,6 +6,7 @@
   "engines": {
     "vscode": "^1.78.0"
   },
+  "publisher": "kexposito",
   "icon": "images/icon.png",
   "categories": [
     "Other"
