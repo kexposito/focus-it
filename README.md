@@ -34,4 +34,4 @@ If you have any feedback, suggestions, or issues, feel free to open an issue on 
 
 ## License
 
-This extension is licensed under the [MIT License](LICENSE).
+This extension is licensed under the MIT License
