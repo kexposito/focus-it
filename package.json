@@ -15,6 +15,12 @@
     "commands": [{
       "command": "focus-it.execute",
       "title": "Focus It"
+    }],
+    "keybindings": [{
+      "command": "focus-it.execute",
+      "key": "ctrl+shift+m",
+      "mac": "cmd+shift+m",
+      "when": "editorTextFocus"
     }]
   },
   "scripts": {
