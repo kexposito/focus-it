@@ -4,6 +4,8 @@
 
 FocusIt is a Visual Studio Code extension that allows you to focus on a single window at a time. When activated, the extension hides all other windows except the one that is currently in focus. When executed again, it restores all previously hidden windows.
 
+![visual example](images/visual-example.gif)
+
 ## Features
 
 - Easily activate FocusIt with a customizable keyboard shortcut.
