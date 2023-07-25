@@ -6,6 +6,7 @@
   "engines": {
     "vscode": "^1.78.0"
   },
+  "icon": "images/icon.png",
   "categories": [
     "Other"
   ],
@@ -22,6 +23,10 @@
       "mac": "cmd+shift+m",
       "when": "editorTextFocus"
     }]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kexposito/focus-it.git"
   },
   "scripts": {
     "lint": "eslint .",
