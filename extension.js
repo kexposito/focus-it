@@ -38,8 +38,7 @@ async function restoreGroups(groups) {
       const tab = group.tabs[index];
 
       // reopen the tab inside the group
-      const document = await vscode.workspace.openTextDocument(tab.input.uri);
-      await vscode.window.showTextDocument(document, { preview: false });
+      await vscode.window.showTextDocument(tab.input.uri, { preview: false });
     }
 
     // create a new group on the right if is not the last one
@@ -49,13 +48,11 @@ async function restoreGroups(groups) {
   }
 
   // set the group and tab in focus after recovery the previous state
-  const document = await vscode.workspace.openTextDocument(activeGroup.uri);
-  await vscode.window.showTextDocument(document, { preview: false, viewColumn: activeGroup.gropuViewColumn });
+  await vscode.window.showTextDocument(activeGroup.uri, { preview: false, viewColumn: activeGroup.gropuViewColumn });
 }
 
 function backupGroups() {
   return vscode.window.tabGroups.all.map(group => ({
-    activeTab: group.activeTab,
     isActive: group.isActive,
     tabs: backupGroupTabs(group)
   }))
@@ -69,7 +66,6 @@ function backupGroupTabs(group) {
 
     return {
       isActive: tab.isActive,
-      label: tab.label,
       input: tab.input
     }
   })
