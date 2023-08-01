@@ -14,6 +14,8 @@ function activate(context) {
 function getTextEditorsForEditorGroups() {
   focusIsActive = !focusIsActive;
 
+  if (!vscode.window.activeTextEditor) return;
+
   if (focusIsActive) {
     allGroupTabs = backupGroups();
 
