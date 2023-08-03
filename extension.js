@@ -1,4 +1,3 @@
-const { group } = require('console');
 const vscode = require('vscode');
 
 let focusIsActive = false;
