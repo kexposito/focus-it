@@ -30,19 +30,43 @@ function getTextEditorsForEditorGroups() {
 
 // restore the tabsGroup and set the focus in the right place
 async function restoreGroups(groups) {
-  const indexToSplit = activeGroup.gropuViewColumn - 1;
-  const leftGroups = groups.slice(0, indexToSplit).reverse();
-  const rightGroups = groups.slice(indexToSplit + 1);
+  // Detect horizontal groups: multiple groups sharing the same viewColumn (stacked above/below)
+  const viewColumnCounts = {};
+  groups.forEach(g => {
+    viewColumnCounts[g.viewColumn] = (viewColumnCounts[g.viewColumn] || 0) + 1;
+  });
+  const hasHorizontalGroups = Object.values(viewColumnCounts).some(count => count > 1);
 
-  await openGroups(leftGroups, "left");
-  await openGroups(rightGroups, "right");
+  if (hasHorizontalGroups) {
+    // Mixed or purely horizontal layout: handle above/below groups in same column
+    const activeColumnGroups = groups.filter(g => g.viewColumn === activeGroup.groupViewColumn);
+    const activeRowIndex = activeColumnGroups.findIndex(g => g.isActive);
+
+    const aboveGroups = activeColumnGroups.slice(0, activeRowIndex).reverse();
+    const belowGroups = activeColumnGroups.slice(activeRowIndex + 1);
+    const leftGroups = groups.filter(g => g.viewColumn < activeGroup.groupViewColumn).reverse();
+    const rightGroups = groups.filter(g => g.viewColumn > activeGroup.groupViewColumn);
+
+    await openGroups(aboveGroups, "above");
+    await openGroups(belowGroups, "below");
+    await openGroups(leftGroups, "left");
+    await openGroups(rightGroups, "right");
+  } else {
+    // Pure vertical layout (left/right groups only)
+    const indexToSplit = activeGroup.groupViewColumn - 1;
+    const leftGroups = groups.slice(0, indexToSplit).reverse();
+    const rightGroups = groups.slice(indexToSplit + 1);
+
+    await openGroups(leftGroups, "left");
+    await openGroups(rightGroups, "right");
+  }
 }
 
 async function openGroups(groups, side) {
   for (let gIndex = 0; gIndex < groups.length; gIndex++) {
     let group = groups[gIndex];
 
-    // create a new group on the right if is not the last one
+    // create a new group on the given side if is not the last one
     if (gIndex + 1 <= groups.length) {
       openNewGroup(side);
     }
@@ -55,23 +79,29 @@ async function openGroups(groups, side) {
     }
   }
 
-  await vscode.window.showTextDocument(activeGroup.uri, { preview: false, viewColumn: activeGroup.gropuViewColumn });
+  await vscode.window.showTextDocument(activeGroup.uri, { preview: false, viewColumn: activeGroup.groupViewColumn });
 }
 
 function openNewGroup(side) {
-  if (side === "right") {
-    vscode.commands.executeCommand('workbench.action.newGroupRight');
-  } else {
-    vscode.commands.executeCommand('workbench.action.newGroupLeft');
-  }
+  const commands = {
+    right: 'workbench.action.newGroupRight',
+    left: 'workbench.action.newGroupLeft',
+    above: 'workbench.action.newGroupAbove',
+    below: 'workbench.action.newGroupBelow'
+  };
+  vscode.commands.executeCommand(commands[side]);
 }
 
 function backupGroups() {
-  return vscode.window.tabGroups.all.map(group => ({
+  return vscode.window.tabGroups.all.map((group, index) => ({
     isActive: group.isActive,
     tabs: backupGroupTabs(group),
-    viewColumn: group.viewColumn
-  })).sort((group1, group2) => (group1.viewColumn - group2.viewColumn))
+    viewColumn: group.viewColumn,
+    rowOrder: index
+  })).sort((a, b) => {
+    if (a.viewColumn !== b.viewColumn) return a.viewColumn - b.viewColumn;
+    return a.rowOrder - b.rowOrder;
+  });
 }
 
 function backupGroupTabs(group) {
@@ -90,7 +120,7 @@ function backupGroupTabs(group) {
 function setActiveGroupAndTab(tab) {
   activeGroup = {
     uri: tab.input.uri,
-    gropuViewColumn: tab.group.viewColumn
+    groupViewColumn: tab.group.viewColumn
   };
 }
 
